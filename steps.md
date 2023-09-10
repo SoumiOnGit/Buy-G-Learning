@@ -2,4 +2,4 @@
 -   Create main.py and initialize a sample flask app with 1 route returning "hello world " in render_template
 
 # Step 2 -
--   Create a basic db model
+-   Create a basic db model and make sure tables are created in db 
