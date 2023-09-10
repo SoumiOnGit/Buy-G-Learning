@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome, Dear Soumi Admin</h1>
+        <p>Good Morning</p>
+    </header>
+    <div class="container">
+        <a href="/add_category">Add New Category</a>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th> View category</th>
+                    <th>Rename Category</th>
+                    <th>Delete Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for blah in blahblah %}
+                    <tr>
+                        <td>{{ blah.name }}</td>
+                        <td><a href="/view_category/{{ blah['id'] }}">View category</a></td>
+                        <td><a href="/rename_category/{{ blah['id'] }}">Rename Category</a></td>
+                        <td><a href="/delete_category/{{ blah['id'] }}">Delete Category</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <style>
+        /* Add this CSS to your existing styles */
+        .styled-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    
+        .styled-table th, .styled-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    
+        .styled-table th {
+            background-color: #f2f2f2;
+        }
+    
+        .styled-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+    
+    
+    
+</body>
+</html>

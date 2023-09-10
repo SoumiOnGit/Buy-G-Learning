@@ -3,3 +3,6 @@
 
 # Step 2 -
 -   Create a basic db model and make sure tables are created in db 
+
+# Step 3 -
+-   Create Admin login and admin dashboard page along with the default admin user
