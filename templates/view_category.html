@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/add_product/{{cat.id}}">Add New product</a>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>expiry_date</th>
+                    <th>quantity_available</th>
+                    <th>description</th>
+                    <th>Update Product</th>
+                    <th>Delete Product</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                {% for prod in products %}
+                    <tr>
+                        <td>{{ prod.name }}</td>
+                        <td>{{ prod.price }}</td>
+                        <td>{{ prod.expiry_date }}</td>
+                        <td>{{ prod.quantity_available }}</td>
+                        <td>{{ prod.description }}</td>
+                        <td><a href="/update_product/{{ prod['id'] }}">Update Product</a></td>
+                        <td><a href="/delete_product/{{ prod['id'] }}">Delete Product</a></td>
+                        
+                    </tr>
+                
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <style>
+        /* Add this CSS to your existing styles */
+        .styled-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    
+        .styled-table th, .styled-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    
+        .styled-table th {
+            background-color: #f2f2f2;
+        }
+    
+        .styled-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</body>
+</html>

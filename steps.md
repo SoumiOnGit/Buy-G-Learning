@@ -6,3 +6,7 @@
 
 # Step 3 -
 -   Create Admin login and admin dashboard page along with the default admin user
+
+# Step 4 -
+-   CRUD for sections and products
+

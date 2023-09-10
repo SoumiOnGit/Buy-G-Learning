@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="content">
+        <h1 style="text-align: center"><div class="content">
+        <h1 style="text-align: center">Update Product</h1>
+    
+        <div class="form">
+            <form action="/update_product/{{product.id}}" method="POST">
+    
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="product_name" required value="{{product.name}}">
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="price" required value="{{product.price}}">
+        </div>
+        <div class="mb-3">
+            <label for="expiry_date" class="form-label">Expiry Date</label>
+            <input type="date" class="form-control" id="expiry_date" name="expiry_date" required value="{{date}}">
+        </div>
+        <div class="mb-3">
+            <label for="quantity_available" class="form-label">Quantity Available</label>
+            <input type="number" class="form-control" id="quantity_available" name="quantity_available" required value="{{product.quantity_available}}">
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required>{{product.description}}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

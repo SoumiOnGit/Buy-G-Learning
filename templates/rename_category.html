@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="content">
+        <h1 style="text-align: center">Rename Category</h1>
+    
+        <div class="form">
+            <form action="/rename_category/{{section.id}}" method="POST">
+                <input type="text" name="name" id="content" value="{{section.name}}">
+                <input type="submit" value="Update">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
