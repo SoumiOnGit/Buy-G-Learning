@@ -197,12 +197,42 @@ def update_product(id):
         return render_template('update_product.html', product=product, date=expiry_date_str)
 
 
+@app.route('/signup',methods =['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+        user = User(username=username,email=email,password=password,is_store_manager=0)
+        try:
+            db.session.add(user)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an issue adding new user'
+            
+    return render_template('signup.html')
 
+@app.route('/login',methods =['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        print(email,password)
+        users=User.query.all()
+        for user in users:
+            if user.email == email and user.password == password and user.email!="admin@admin.com":
+                print("inside if condition")
+                return redirect(f'/user_dashboard/{user.id}')
+        return redirect(url_for('login'))
+    return render_template('login.html')
 
-
+@app.route('/user_dashboard/<int:user_id>', methods=['GET'])
+def user_dashboard(user_id):
+     user = User.query.get_or_404(user_id)
+     return render_template('user_dashboard.html', user = user)
 
 
 if __name__ == '__main__':
-    
     app.run(debug=True)
 

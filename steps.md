@@ -10,3 +10,6 @@
 # Step 4 -
 -   CRUD for sections and products
 
+# Step 5 - 
+-   User Signup and User Login, once user logs in return welcome username.
+
