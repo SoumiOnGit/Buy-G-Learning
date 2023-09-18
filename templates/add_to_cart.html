@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>product name: {{product.name}}</h3>
+    <h3>product price: {{product.price}}</h3>
+    <h3>product expiry_date: {{product.expiry_date}}</h3>
+    <h3>product quantity_available: {{product.quantity_available}}</h3>
+    
+
+    <form action="/add_to_cart/{{user['id']}}/{{product['id']}}" method="post">
+        <div class="mb-3">
+            <label for="Quantity" class="form-label">Quantity</label>
+            <input type="text" class="form-control" id="Quantity" name="Quantity" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+</body>
+</html>

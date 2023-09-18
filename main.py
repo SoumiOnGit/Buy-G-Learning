@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import desc
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from sqlalchemy import ForeignKey
+
 import os
 
 app = Flask(__name__)
@@ -20,7 +22,7 @@ class User(db.Model):
         email = db.Column(db.String(200), nullable = False)
         password = db.Column(db.String(200), nullable = False)
         is_store_manager = db.Column(db.Integer, default= 0)
-        #user_cart = relationship('Cart', backref='user', lazy=True)
+        user_cart = relationship('Cart', backref='user', lazy=True)
 
     
         def __repr__(self):
@@ -39,7 +41,15 @@ class Product(db.Model):
         quantity_available = db.Column(db.Integer, nullable = False)
         section_id = db.Column(db.Integer, db.ForeignKey('section.id'), nullable=False)  # Define a foreign key to establish the relationship
         description = db.Column(db.String(200), nullable = False)
-
+        
+class Cart(db.Model):
+    id= db.Column(db.Integer, primary_key = True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Define a foreign key to establish the relationship
+    quantity = db.Column(db.Integer, nullable = False)
+    date_created = db.Column(db.DateTime , default = datetime.now())
+    is_purchased = db.Column(db.Integer, default= 0)
+    product_id = db.Column(db.Integer, ForeignKey('product.id', ondelete='CASCADE'), nullable=False)
+    car_product = relationship('Product', backref='cart', lazy=True)
 
 
 if not os.path.exists("./test.db"):
@@ -50,7 +60,19 @@ if not os.path.exists("./test.db"):
                 admin = User(id=1,username='admin',email='admin@admin.com',password='admin',is_store_manager=1) # created automatically
                 db.session.add(admin)
                 db.session.commit()
-
+                c1=  Section(id=1,name='Fruits')
+                c2 = Section(id=2,name='Vegetables')
+                p1 = Product(id=1,name='Apple',price=10,expiry_date=datetime(2022,5,5),quantity_available=10,description='This is an apple',section_id=1)
+                p2 = Product(id=2,name='Orange',price=20,expiry_date=datetime(2022,5,5),quantity_available=10,description='This is an orange',section_id=1)
+                p3 = Product(id=3,name='Tomato',price=30,expiry_date=datetime(2022,5,5),quantity_available=10,description='This is a tomato',section_id=2)
+                p4 = Product(id=4,name='Potato',price=40,expiry_date=datetime(2022,5,5),quantity_available=10,description='This is a potato',section_id=2)
+                db.session.add(c1)
+                db.session.add(c2)
+                db.session.add(p1)
+                db.session.add(p2)
+                db.session.add(p3)
+                db.session.add(p4)
+                db.session.commit()
 
 @app.route('/admin_login',methods =['GET', 'POST'])
 def admin_login():
@@ -248,10 +270,38 @@ def user_dashboard(user_id):
 
     if query:
         products = Product.query.filter(Product.name.contains(query)).all()
-        
+    print(user.user_cart)
     return render_template('user_dashboard.html', cats=cats, user=user, products=products, query=query, selected_categories=selected_categories, min_price=min_price, max_price=max_price)
 
+@app.route('/add_to_cart/<int:user_id>/<int:product_id>', methods=['GET', 'POST'])
+def add_to_cart(user_id,product_id):
+    user=User.query.get_or_404(user_id)
+    product=Product.query.get_or_404(product_id)
+    if request.method == 'POST':
+         Quantity = request.form['Quantity']
+         user_cart_items=Cart.query.filter_by(user_id=user_id,product_id=product_id).first()
+         if user_cart_items:
+            user_cart_items.quantity+=int(Quantity)
+            db.session.commit()
+            return redirect(f'/user_dashboard/{user_id}')
+         else:
+            cart=Cart(user_id=user_id,product_id=product_id,quantity=Quantity)
+            db.session.add(cart)
+            db.session.commit()
+            print("added")
+            return redirect(f'/user_dashboard/{user_id}')
+     
+    return render_template('add_to_cart.html',user=user,product=product)
 
+@app.route('/showcart/<int:user_id>', methods=['GET', 'POST'])
+
+def showcart(user_id):
+    user=User.query.get_or_404(user_id)
+    cart_items=Cart.query.filter_by(user_id=user_id).all()
+    Total=0
+    for item in cart_items:
+        Total+=item.quantity*item.car_product.price
+    return render_template('showcart.html',user=user,cart_items=cart_items,Total=Total)
 
 if __name__ == '__main__':
     app.run(debug=True)

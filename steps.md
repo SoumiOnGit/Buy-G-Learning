@@ -16,3 +16,9 @@
 # Step 6 -
 -   Render all the sections and products to user along with search and filter function.
 
+# Step 7 - 
+(Hint: whenever you create a new model delete the database then run the application.)
+-   add default products and catergory.
+-   Add to cart functionality.
+
+
