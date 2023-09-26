@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+        }
+
+        nav {
+            background-color: #444;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 10px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #222;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 20px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #222;
+            color: #fff;
+            padding: 20px 0;
+            font-size: 16px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        /* Custom styles for form elements */
+        .category-label {
+            margin-right: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        button {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ user.username }}</h1>
+    </header>
+
+    <nav>
+        <a href="#profile">Profile</a>
+        <a href="#orders">Orders</a>
+        <a href="#settings">Settings</a>
+        <a href="logout.html">Logout</a>
+        <a href="/showcart/{{user.id}}">Cart [ {{user.user_cart|length}} ]</a>
+        <br>
+        <br>
+        <form action="/user_dashboard/{{user.id}}" method="get">
+            {% with selected_categories=request.args.getlist('category') %}
+            <input type="checkbox" id="show-all" name="category" value="show-all" {% if 'show-all' in selected_categories %}checked{% endif %}>
+            <label for="show-all" class="category-label">Show All</label>
+
+            {% for cat in cats %}
+                <input type="checkbox" id="{{cat.name}}" name="category" value="{{cat.name}}" {% if cat.name in selected_categories %}checked{% endif %}>
+                <label for="{{cat.name}}" class="category-label">{{cat.name}}</label>
+            {% endfor %}
+
+            <input type="text" name="query" placeholder="Search..." value="{{ request.args.get('query') }}">
+            <label for="min_price">Min Price:</label>
+            <input type="number" id="min_price" name="min_price" step="0.01" value="{{ min_price }}" min="0">
+    
+            <label for="max_price">Max Price:</label>
+            <input type="number" id="max_price" name="max_price" step="0.01" value="10000000" min="0">
+    
+            <button type="submit">Search</button>
+            {% endwith %}
+        </form>
+    </nav>
+
+    {% for cat in cats %}
+        {% if selected_categories|length == 0 or cat.name in selected_categories or 'show-all' in selected_categories %}
+        {% if cat.products|length > 0 %}
+        <section>
+            <h2>{{ cat.name }}</h2>
+            <ul>
+                {% for product in cat.products if product in products %}
+                <li>
+                    <strong>Name:</strong> {{ product.name }} <a href="/add_to_cart/{{user.id}}/{{product.id}}">Add To Cart</a><br>
+                    <strong>Price:</strong> {{ product.price }}<br>
+                    <strong>Expiry Date:</strong> {{ product.expiry_date }}<br>
+                    <strong>Quantity Available:</strong> {{ product.quantity_available }}<br>
+                    <strong>Description:</strong> {{ product.description }}<br>
+                    {% for item in user.user_cart %}
+                    {% if item.product_id == product.id %}
+                    <strong>Quantity in the cart:</strong> {{ item.quantity }}
+                    {% endif %}
+                    {% endfor %}
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    <footer>
+        <p>&copy; 2023 User Dashboard. All rights reserved.</p>
+    </footer>
+</body>
+</html>

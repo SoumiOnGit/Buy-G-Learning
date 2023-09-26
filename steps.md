@@ -10,3 +10,15 @@
 # Step 4 -
 -   CRUD for sections and products
 
+# Step 5 - 
+-   User Signup and User Login, once user logs in return welcome username.
+
+# Step 6 -
+-   Render all the sections and products to user along with search and filter function.
+
+# Step 7 - 
+(Hint: whenever you create a new model delete the database then run the application.)
+-   add default products and catergory.
+-   Add to cart functionality.
+
+

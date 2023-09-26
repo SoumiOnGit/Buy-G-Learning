@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>buyG - Signup</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    
+    <style>
+        body {
+            background-color: #add8e6; /* Set a light blue background color for the entire page */
+            color: #333; /* Set text color to a darker shade */
+            font-family: Arial, sans-serif; /* Choose a clean font */
+        }
+
+        .container {
+            background-color: #ffffff; /* Set a white background for the form */
+            border-radius: 10px; /* Add some border-radius for rounded corners */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #007bff; /* Set heading text color to a light blue shade */
+        }
+
+        label {
+            font-weight: bold; /* Make labels bold */
+        }
+
+        /* Add some spacing between form elements */
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        /* Style the submit button */
+        .btn-primary {
+            background-color: #007bff; /* Set a light blue background color */
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Login for buyG</h1>
+        <form action="/login" method="post">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+
+    <!-- Include Bootstrap JS (optional, for certain features) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

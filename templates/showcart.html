@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .total-price {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .cart-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        h3 {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .cart-item a {
+            color: #f55;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.2s;
+        }
+
+        .cart-item a:hover {
+            color: #d33;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Shopping Cart</h1>
+    </header>
+    <div class="container">
+        <div class="total-price">
+            <h2>Total Price: ${{ Total }}</h2>
+        </div>
+        <h2><a href="/checkout/{{user.id}}" style="text-decoration: none; color: #fff; background-color: #f55; padding: 10px 20px; border-radius: 5px; transition: background-color 0.2s;">Checkout</a></h2>
+        {% for item in cart_items %}
+            <div class="cart-item">
+                <h3>Quantity in Cart: {{ item.quantity }}</h3>
+                <h3>Product Name: {{ item.car_product.name }}</h3>
+                <h3>Product Price: ${{ item.car_product.price }}</h3>
+                <h3>Product Expiry Date: {{ item.car_product.expiry_date }}</h3>
+                <h3>Available Quantity: {{ item.car_product.quantity_available }}</h3>
+                <h3>Cost of Item: ${{ item.quantity * item.car_product.price }}</h3>
+                <a href="/remove_item/{{user.id}}/{{item.id}}">Remove item</a>
+                <a href="/update_quantity/{{user.id}}/{{item.car_product.id}}">Update Quantity</a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
